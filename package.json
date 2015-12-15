@@ -1,0 +1,20 @@
+{
+    "name": "TruthOrDareGame",
+    "version": "0.0.1",
+    "description": "A web game for truth or dare",
+    "author": "JackBigApple",
+    "contributors": [{
+        "name": "Mark YF Fang",
+        "email": "markfang1030@gmail.com"
+    }],
+    "main": "TruthOrDareServer.js",
+    "engine": "node >= 4.2.1",
+    "dependencies": {
+        "express": "4.13.x",
+        "jade": "1.2.x",
+        "body-parser": "1.14.x",
+        "mysql": "2.9.0"
+    }
+}
+
+

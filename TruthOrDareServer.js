@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
+app.set('view engine', 'ejs');
 
 app.get('/', function(req, res) {
     var tmpTask = '';
@@ -21,11 +21,41 @@ app.get('/', function(req, res) {
     });
 
     connection.connect();
-    connection.query('SELECT taskContent from TruthGame.Tasks where TaskID=1', function(err, rows, fields) {
+    connection.query('SELECT Content from TruthGame.Dare where TaskID=45;', function(err, rows, fields) {
         connection.end(function(err) {console.log('connection ended')});
         if (err) throw err;
-        tmpTask = rows[0].taskContent;
-        res.render('index', { task: tmpTask });
+        tmpTask = rows[0].Content;
+        console.log(rows[0].Content);
+        console.log(tmpTask);
+        res.render('index', { content: tmpTask });
+    });
+});
+
+app.post('/getTask', function(req, res) {
+    var queryType = 0;
+    var mysqlQuery = '';
+
+    if(req.body.qType == 'btn_truth') {
+        queryType = 'Truth';
+    } else {
+        queryType = 'Dare';
+    }
+    mysqlQuery = 'SELECT Content from TruthGame.' + queryType + ' ORDER BY RAND() LIMIT 1;'
+    console.log(mysqlQuery);
+    
+    var connection = mysql.createConnection({
+        host     : 'localhost',
+        user     : 'truthordare',
+        password : 'JackAndMark'
+    });
+
+    connection.connect();
+    connection.query(mysqlQuery, function(err, rows, fields) {
+        connection.end(function(err) {console.log('connection ended')});
+        if (err) throw err;
+        console.log(rows[0].Content);
+        res.write(rows[0].Content);
+        res.end();
     });
 });
 

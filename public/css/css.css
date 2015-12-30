@@ -3,6 +3,8 @@
 	background-color:#eeeeee;
 	margin:20px auto;
 	padding:20px;
+	font-size:12px;
+	text-align:center;
 }
 h1{
 	text-align:center;
@@ -20,12 +22,12 @@ h1{
 	text-align:center;
 }
 #btn_start{
-	
+	display:none;
 	width:200px;
 	height:50px;
 }
 #btn_truth{
-	display:normal;
+	display:none;
 	width:200px;
 	height:50px;
 }
@@ -33,4 +35,8 @@ h1{
 	display:none;
 	width:200px;
 	height:50px;
+}
+#questionInfo{
+	font-size:10px;
+	color:#FF0000;
 }

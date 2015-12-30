@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/css.css">
+	<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.11.3.min.js">
+	</script>
+	<script type="text/javascript" src="http://beneposto.pl/jqueryrotate/js/jQueryRotateCompressed.js">
+	</script>
+	<script>
+	var RotateAngle;
+	var answerWord="123";
+	function getQuestion(clickButton){
+		if(clickButton=="#btn_truth"){
+
+		}else if(clickButton=="#btn_adventure"){
+			//AJAX
+				$.post("demo_test_post.asp",  //來源
+						{qType: "btn_adventure"},	//查詢值
+					function(data,status){   //callback
+						answerWord = data;
+					}
+				);
+				answerWord = "data2"; //測試用
+		}else{
+			answerWord = "else";
+		}
+	}
+	$(document).ready(function(){
+		$("#img").rotate({
+			bind: {
+				click: function(){
+					RotateAngle = Math.random()*10000;
+					$("#img").rotate({
+						angle: 0,
+						animateTo: RotateAngle,
+						//duration: 5000
+					});
+					setTimeout(function(){
+						$("#img").stopRotate();
+					}, 10000);
+					$("#btn_truth").show();
+					$("#btn_adventure").show();
+					$("#questionType").text(function(){
+						return ""; 
+					});
+					$("#questionInfo").text(function(){
+						return "（被指定者請選擇...）"; 
+					});
+				}
+		  }
+		});
+		$("#btn_truth").click(function(){
+			$("#btn_truth").hide();
+			$("#btn_adventure").hide();
+			$("#questionType").text(function(){
+				return "真心話："; 
+			});
+
+			//AJAX
+				$.post("getTask",  //來源
+						{qType: "btn_truth"},	//查詢值
+					function(data,status){   //callback
+						answerWord = data;
+						$("#question").text(answerWord);
+					}
+				);
+			
+			$("#questionInfo").text(function(){
+				return "（欲進行下一題，請轉動酒瓶）"; 
+			});
+			
+		});
+		$("#btn_adventure").click(function(){
+			$("#btn_truth").hide();
+			$("#btn_adventure").hide();
+			$("#questionType").text(function(){
+				return "大冒險："; 
+			});
+			
+			//AJAX
+				$.post("getTask",  //來源
+						{qType: "btn_adventure"},	//查詢值
+					function(data,status){   //callback
+						answerWord = data;
+						$("#question").text(answerWord);
+					}
+				);
+
+			$("#questionInfo").text(function(){
+				return "（欲進行下一題，請轉動酒瓶）"; 
+			});	
+		});
+		
+	});
+	</script>
+	<title>真心話大冒險</title>
+	<meta charset="UTF-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="author" content="Jack & Mark">
+</head>
+<body>
+	<div id="container">
+		<h1>真心話大冒險</h1>
+		<div id="animation">
+			<img src="img/bottle.png" id="img"/>
+		</div>
+		<div id="questionInfo">（請轉動酒瓶）</div>
+		<div id="question_block">
+			<h2><span id="questionType"></span><span id="question"></span></h2>
+		</div>
+
+		<div id="buttons">
+			<input id="btn_start" type="button" onclick="" value="再玩一次">
+			<input id="btn_truth" type="button" onclick="" value="真心話">
+			<input id="btn_adventure" type="button" onclick="" value="大冒險">
+		</div>
+	</div>
+</body>
+</html>

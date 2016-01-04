@@ -11,7 +11,6 @@
     "engine": "node >= 4.2.1",
     "dependencies": {
         "express": "4.13.x",
-        "ejs": "2.3.x",
         "body-parser": "1.14.x",
         "mysql": "2.9.0"
     }
